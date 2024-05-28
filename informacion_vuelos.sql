@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-05-2024 a las 00:44:38
+-- Tiempo de generación: 28-05-2024 a las 06:37:19
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -32,6 +32,17 @@ CREATE TABLE `aerolinea` (
   `Nombre_aerolinea` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `aerolinea`
+--
+
+INSERT INTO `aerolinea` (`ID_aerolinea`, `Nombre_aerolinea`) VALUES
+(1, 'Avianca'),
+(2, 'LATAM'),
+(3, 'Clic'),
+(4, 'American Airlin'),
+(5, 'LATAM');
+
 -- --------------------------------------------------------
 
 --
@@ -43,6 +54,43 @@ CREATE TABLE `ciudad` (
   `Nombre_ciudad` varchar(25) NOT NULL,
   `ID_Dep_FK` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `ciudad`
+--
+
+INSERT INTO `ciudad` (`ID_Ciudad`, `Nombre_ciudad`, `ID_Dep_FK`) VALUES
+(1, 'Leticia', 1),
+(2, 'Medellín', 2),
+(3, 'Arauca', 3),
+(4, 'Barranquilla', 4),
+(5, 'Bogotá, D.C.', 5),
+(6, 'Cartagena De Indias', 6),
+(7, 'Tunja', 7),
+(8, 'Manizales', 8),
+(9, 'Florencia', 9),
+(10, 'Yopal', 10),
+(11, 'Popayán', 11),
+(12, 'Valledupar', 12),
+(13, 'Quibdó', 13),
+(14, 'Montería', 14),
+(15, 'Inírida', 16),
+(16, 'San José Del Guaviare', 17),
+(17, 'Neiva', 18),
+(18, 'Riohacha', 19),
+(19, 'Santa Marta', 20),
+(20, 'Villavicencio', 21),
+(21, 'Pasto', 22),
+(22, 'Cúcuta', 23),
+(23, 'Mocoa', 24),
+(24, 'Armenia', 25),
+(25, 'Pereira', 26),
+(26, 'San Andrés', 27),
+(27, 'Bucaramanga', 28),
+(28, 'Sincelejo', 29),
+(29, 'Ibagué', 30),
+(30, 'Cali', 31),
+(31, 'Mitú', 32);
 
 -- --------------------------------------------------------
 
@@ -56,6 +104,45 @@ CREATE TABLE `departamento` (
   `ID_Pais_FK` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `departamento`
+--
+
+INSERT INTO `departamento` (`ID_Departamento`, `Nombre_Dep`, `ID_Pais_FK`) VALUES
+(1, 'Amazonas', 1),
+(2, 'Antioquia', 1),
+(3, 'Arauca', 1),
+(4, 'Atlántico', 1),
+(5, 'Bogotá', 1),
+(6, 'Bolívar', 1),
+(7, 'Boyacá', 1),
+(8, 'Caldas', 1),
+(9, 'Caquetá', 1),
+(10, 'Casanare', 1),
+(11, 'Cauca', 1),
+(12, 'Cesar', 1),
+(13, 'Chocó', 1),
+(14, 'Córdoba', 1),
+(15, 'Cundinamarca', 1),
+(16, 'Guainía', 1),
+(17, 'Guaviare', 1),
+(18, 'Huila', 1),
+(19, 'La Guajira', 1),
+(20, 'Magdalena', 1),
+(21, 'Meta', 1),
+(22, 'Nariño', 1),
+(23, 'Norte de Santander', 1),
+(24, 'Putumayo', 1),
+(25, 'Quindío', 1),
+(26, 'Risaralda', 1),
+(27, 'San Andrés y Providencia', 1),
+(28, 'Santander', 1),
+(29, 'Sucre', 1),
+(30, 'Tolima', 1),
+(31, 'Valle del Cauca', 1),
+(32, 'Vaupés', 1),
+(33, 'Vichada', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -66,6 +153,19 @@ CREATE TABLE `estado_vuelo` (
   `ID_Estado` int(1) NOT NULL,
   `Estado_Vuelo` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `estado_vuelo`
+--
+
+INSERT INTO `estado_vuelo` (`ID_Estado`, `Estado_Vuelo`) VALUES
+(1, 'A tiempo'),
+(2, 'Abordando'),
+(3, 'Cancelado'),
+(4, 'Cerrado'),
+(5, 'En sala'),
+(6, 'Programado'),
+(7, 'Retrasado');
 
 -- --------------------------------------------------------
 
@@ -91,37 +191,13 @@ INSERT INTO `genero` (`ID_Genero`, `Tipo_Genero`, `Genero`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `info_vuelo_ida`
+-- Estructura de tabla para la tabla `informacion_vuelos`
 --
 
-CREATE TABLE `info_vuelo_ida` (
-  `ID_vuelo` int(11) NOT NULL,
-  `Tipo_vuelo_FK` varchar(15) DEFAULT NULL,
-  `ID_aerolinea_FK` int(11) DEFAULT NULL,
-  `Estado_vuelo_FK` int(1) DEFAULT NULL,
-  `ID_origen_FK` int(1) DEFAULT NULL,
-  `ID_destino_FK` int(1) DEFAULT NULL,
-  `Hora_salida` datetime DEFAULT NULL,
-  `Hora_llegada` datetime DEFAULT NULL,
-  `ID_pasajero_FK` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `info_vuelo_regreso`
---
-
-CREATE TABLE `info_vuelo_regreso` (
-  `ID_Vuelo_Regreso` int(11) NOT NULL,
-  `Tipo_vuelo_FK` varchar(15) DEFAULT NULL,
-  `ID_aerolinea_FK` int(11) DEFAULT NULL,
-  `Estado_vuelo_FK` int(1) DEFAULT NULL,
-  `ID_origen_FK` int(1) DEFAULT NULL,
-  `ID_destino_FK` int(1) DEFAULT NULL,
-  `Hora_salida` datetime DEFAULT NULL,
-  `Hora_llegada` datetime DEFAULT NULL,
-  `ID_pasajero_FK` int(11) DEFAULT NULL
+CREATE TABLE `informacion_vuelos` (
+  `ID_Vuelo_FK` int(11) NOT NULL,
+  `Pasajero_FK` int(11) DEFAULT NULL,
+  `Tripulacion_FK` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -142,7 +218,12 @@ CREATE TABLE `pais` (
 
 INSERT INTO `pais` (`ID_Pais`, `Nombre_Pais`, `Nacionalidad`) VALUES
 (1, 'Colombia', 'Colombiana'),
-(2, 'España', 'Española');
+(2, 'España', 'Española'),
+(3, 'Argentina', 'Argentina'),
+(4, 'Canada', 'Canadiense'),
+(5, 'Chile', 'Chilena'),
+(6, 'Estados Unidos', 'Estadounidense'),
+(7, 'Panama', 'Panameña');
 
 -- --------------------------------------------------------
 
@@ -172,6 +253,25 @@ INSERT INTO `pasajeros` (`ID_Pasajero`, `Primer_Nombre`, `Segundo_Nombre`, `Prim
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tipo_trayecto`
+--
+
+CREATE TABLE `tipo_trayecto` (
+  `ID_Tipo_Trayecto` int(11) NOT NULL,
+  `Tipo_Trayecto` varchar(25) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `tipo_trayecto`
+--
+
+INSERT INTO `tipo_trayecto` (`ID_Tipo_Trayecto`, `Tipo_Trayecto`) VALUES
+(1, 'Ida'),
+(2, 'Regreso');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tipo_vuelo`
 --
 
@@ -179,6 +279,41 @@ CREATE TABLE `tipo_vuelo` (
   `ID_tipo_vuelo` int(2) NOT NULL,
   `Tipo_vuelo` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `tipo_vuelo`
+--
+
+INSERT INTO `tipo_vuelo` (`ID_tipo_vuelo`, `Tipo_vuelo`) VALUES
+(1, 'Comercial'),
+(2, 'Charter'),
+(3, 'Carga'),
+(4, 'Privado');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `trayecto`
+--
+
+CREATE TABLE `trayecto` (
+  `ID_Trayecto` int(11) NOT NULL,
+  `Ciudad_Origen` int(11) DEFAULT NULL,
+  `Ciudad_Destino` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `trayecto`
+--
+
+INSERT INTO `trayecto` (`ID_Trayecto`, `Ciudad_Origen`, `Ciudad_Destino`) VALUES
+(1, 5, 6),
+(2, 5, 2),
+(3, 5, 19),
+(4, 6, 5),
+(5, 6, 2),
+(6, 2, 5),
+(8, 2, 6);
 
 -- --------------------------------------------------------
 
@@ -188,12 +323,31 @@ CREATE TABLE `tipo_vuelo` (
 
 CREATE TABLE `tripulacion` (
   `ID_Empleado` int(11) NOT NULL,
-  `Primer_Nombre` varchar(25) DEFAULT NULL,
+  `Primer_Nombre` varchar(25) NOT NULL,
   `Segundo_Nombre` varchar(25) DEFAULT NULL,
-  `Primer_Apellido` varchar(25) DEFAULT NULL,
+  `Primer_Apellido` varchar(25) NOT NULL,
   `Segundo_Apellido` varchar(25) DEFAULT NULL,
+  `genero` int(1) DEFAULT NULL,
   `Relacion_aerolinea` int(11) DEFAULT NULL,
   `Cod_Pais_id_FK` int(3) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `vuelos`
+--
+
+CREATE TABLE `vuelos` (
+  `ID_vuelo` int(11) NOT NULL,
+  `Numero_Vuelo` varchar(5) NOT NULL,
+  `Tipo_vuelo_FK` int(2) DEFAULT NULL,
+  `Aerolinea_FK` int(11) DEFAULT NULL,
+  `Estado_vuelo_FK` int(1) DEFAULT NULL,
+  `Tipo_Trayecto_FK` int(11) DEFAULT NULL,
+  `Trayecto_FK` int(11) DEFAULT NULL,
+  `Hora_salida` datetime DEFAULT NULL,
+  `Hora_llegada` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -233,16 +387,12 @@ ALTER TABLE `genero`
   ADD PRIMARY KEY (`ID_Genero`);
 
 --
--- Indices de la tabla `info_vuelo_ida`
+-- Indices de la tabla `informacion_vuelos`
 --
-ALTER TABLE `info_vuelo_ida`
-  ADD PRIMARY KEY (`ID_vuelo`);
-
---
--- Indices de la tabla `info_vuelo_regreso`
---
-ALTER TABLE `info_vuelo_regreso`
-  ADD PRIMARY KEY (`ID_Vuelo_Regreso`);
+ALTER TABLE `informacion_vuelos`
+  ADD PRIMARY KEY (`ID_Vuelo_FK`),
+  ADD KEY `Pasajero_FK` (`Pasajero_FK`),
+  ADD KEY `Tripulacion_FK` (`Tripulacion_FK`);
 
 --
 -- Indices de la tabla `pais`
@@ -259,10 +409,24 @@ ALTER TABLE `pasajeros`
   ADD KEY `ID_Pais_FK` (`ID_Pais_FK`);
 
 --
+-- Indices de la tabla `tipo_trayecto`
+--
+ALTER TABLE `tipo_trayecto`
+  ADD PRIMARY KEY (`ID_Tipo_Trayecto`);
+
+--
 -- Indices de la tabla `tipo_vuelo`
 --
 ALTER TABLE `tipo_vuelo`
   ADD PRIMARY KEY (`ID_tipo_vuelo`);
+
+--
+-- Indices de la tabla `trayecto`
+--
+ALTER TABLE `trayecto`
+  ADD PRIMARY KEY (`ID_Trayecto`),
+  ADD KEY `Ciudad_Origen` (`Ciudad_Origen`),
+  ADD KEY `Ciudad_Destino` (`Ciudad_Destino`);
 
 --
 -- Indices de la tabla `tripulacion`
@@ -270,7 +434,18 @@ ALTER TABLE `tipo_vuelo`
 ALTER TABLE `tripulacion`
   ADD PRIMARY KEY (`ID_Empleado`),
   ADD KEY `Relacion_aerolinea` (`Relacion_aerolinea`),
-  ADD KEY `Cod_Pais_id_FK` (`Cod_Pais_id_FK`);
+  ADD KEY `Cod_Pais_id_FK` (`Cod_Pais_id_FK`),
+  ADD KEY `genero` (`genero`);
+
+--
+-- Indices de la tabla `vuelos`
+--
+ALTER TABLE `vuelos`
+  ADD PRIMARY KEY (`ID_vuelo`),
+  ADD KEY `Tipo_vuelo_FK` (`Tipo_vuelo_FK`),
+  ADD KEY `ID_aerolinea_FK` (`Aerolinea_FK`),
+  ADD KEY `Estado_vuelo_FK` (`Estado_vuelo_FK`),
+  ADD KEY `Id_Trayecto` (`Trayecto_FK`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -280,37 +455,25 @@ ALTER TABLE `tripulacion`
 -- AUTO_INCREMENT de la tabla `aerolinea`
 --
 ALTER TABLE `aerolinea`
-  MODIFY `ID_aerolinea` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_aerolinea` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `departamento`
 --
 ALTER TABLE `departamento`
-  MODIFY `ID_Departamento` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Departamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de la tabla `estado_vuelo`
 --
 ALTER TABLE `estado_vuelo`
-  MODIFY `ID_Estado` int(1) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `info_vuelo_ida`
---
-ALTER TABLE `info_vuelo_ida`
-  MODIFY `ID_vuelo` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `info_vuelo_regreso`
---
-ALTER TABLE `info_vuelo_regreso`
-  MODIFY `ID_Vuelo_Regreso` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Estado` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `pais`
 --
 ALTER TABLE `pais`
-  MODIFY `ID_Pais` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID_Pais` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `pasajeros`
@@ -319,16 +482,34 @@ ALTER TABLE `pasajeros`
   MODIFY `ID_Pasajero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT de la tabla `tipo_trayecto`
+--
+ALTER TABLE `tipo_trayecto`
+  MODIFY `ID_Tipo_Trayecto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `tipo_vuelo`
 --
 ALTER TABLE `tipo_vuelo`
-  MODIFY `ID_tipo_vuelo` int(2) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_tipo_vuelo` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `trayecto`
+--
+ALTER TABLE `trayecto`
+  MODIFY `ID_Trayecto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `tripulacion`
 --
 ALTER TABLE `tripulacion`
   MODIFY `ID_Empleado` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `vuelos`
+--
+ALTER TABLE `vuelos`
+  MODIFY `ID_vuelo` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -347,6 +528,15 @@ ALTER TABLE `departamento`
   ADD CONSTRAINT `departamento_ibfk_1` FOREIGN KEY (`ID_Pais_FK`) REFERENCES `pais` (`ID_Pais`);
 
 --
+-- Filtros para la tabla `informacion_vuelos`
+--
+ALTER TABLE `informacion_vuelos`
+  ADD CONSTRAINT `informacion_vuelos_ibfk_1` FOREIGN KEY (`ID_Vuelo_FK`) REFERENCES `vuelos` (`ID_vuelo`),
+  ADD CONSTRAINT `informacion_vuelos_ibfk_2` FOREIGN KEY (`ID_Vuelo_FK`) REFERENCES `vuelos` (`ID_vuelo`),
+  ADD CONSTRAINT `informacion_vuelos_ibfk_3` FOREIGN KEY (`Pasajero_FK`) REFERENCES `pasajeros` (`ID_Pasajero`),
+  ADD CONSTRAINT `informacion_vuelos_ibfk_4` FOREIGN KEY (`Tripulacion_FK`) REFERENCES `tripulacion` (`ID_Empleado`);
+
+--
 -- Filtros para la tabla `pasajeros`
 --
 ALTER TABLE `pasajeros`
@@ -355,11 +545,28 @@ ALTER TABLE `pasajeros`
   ADD CONSTRAINT `pasajeros_ibfk_3` FOREIGN KEY (`ID_Pais_FK`) REFERENCES `pais` (`ID_Pais`);
 
 --
+-- Filtros para la tabla `trayecto`
+--
+ALTER TABLE `trayecto`
+  ADD CONSTRAINT `trayecto_ibfk_1` FOREIGN KEY (`Ciudad_Origen`) REFERENCES `ciudad` (`ID_Ciudad`),
+  ADD CONSTRAINT `trayecto_ibfk_2` FOREIGN KEY (`Ciudad_Destino`) REFERENCES `ciudad` (`ID_Ciudad`);
+
+--
 -- Filtros para la tabla `tripulacion`
 --
 ALTER TABLE `tripulacion`
   ADD CONSTRAINT `tripulacion_ibfk_1` FOREIGN KEY (`Relacion_aerolinea`) REFERENCES `aerolinea` (`ID_aerolinea`),
-  ADD CONSTRAINT `tripulacion_ibfk_2` FOREIGN KEY (`Cod_Pais_id_FK`) REFERENCES `pais` (`ID_Pais`);
+  ADD CONSTRAINT `tripulacion_ibfk_2` FOREIGN KEY (`Cod_Pais_id_FK`) REFERENCES `pais` (`ID_Pais`),
+  ADD CONSTRAINT `tripulacion_ibfk_3` FOREIGN KEY (`genero`) REFERENCES `genero` (`ID_Genero`);
+
+--
+-- Filtros para la tabla `vuelos`
+--
+ALTER TABLE `vuelos`
+  ADD CONSTRAINT `vuelos_ibfk_1` FOREIGN KEY (`Tipo_vuelo_FK`) REFERENCES `tipo_vuelo` (`ID_tipo_vuelo`),
+  ADD CONSTRAINT `vuelos_ibfk_2` FOREIGN KEY (`Aerolinea_FK`) REFERENCES `aerolinea` (`ID_aerolinea`),
+  ADD CONSTRAINT `vuelos_ibfk_3` FOREIGN KEY (`Estado_vuelo_FK`) REFERENCES `estado_vuelo` (`ID_Estado`),
+  ADD CONSTRAINT `vuelos_ibfk_4` FOREIGN KEY (`Trayecto_FK`) REFERENCES `trayecto` (`ID_Trayecto`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
