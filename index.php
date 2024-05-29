@@ -42,9 +42,9 @@
                 </div>
                 <div>
                     <h2>Vuelos</h2>
-                    <p>Gestionar vuelos </p>
-                    <a href="#" class="btn btn-primary">
-                        Primary button
+                    <p>Gestionar vuelos un poquito mas de descripcion aqui para variar.</p>
+                    <a href="vuelos.php" class="btn btn-primary">
+                        Ver vuelos
                     </a>
                 </div>
             </div>
