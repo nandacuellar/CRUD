@@ -107,11 +107,11 @@ JOIN
                         echo "<td>" . $row['Ciudad_Destino_Name'] . "</td>";
                         echo "<td>" . $row['Hora_salida'] . "</td>";
                         echo "<td>" . $row['Hora_llegada'] . "</td>";
-                        // echo "<td>";
-                        //     echo "<a href='vuelos/agregar.php?id=". $row['ID_vuelo'] ."' title='Ver' data-toggle='tooltip'>Ver</a>";
-                        //     echo "<a href='update.php?id=". $row['ID_vuelo'] ."' title='Actualizar' data-toggle='tooltip'>Editar</a>";
-                        //     echo "<a href='delete.php?id=". $row['ID_vuelo'] ."' title='Borrar' data-toggle='tooltip'>Borrar</a>";
-                        // echo "</td>";
+                        echo "<td>";
+                            echo "<a href='vuelos/ver.php?id=". $row['ID_vuelo'] ."' title='Ver' data-toggle='tooltip'>Ver</a>";
+                            echo "<a href='update.php?id=". $row['ID_vuelo'] ."' title='Actualizar' data-toggle='tooltip'>Editar</a>";
+                            echo "<a href='delete.php?id=". $row['ID_vuelo'] ."' title='Borrar' data-toggle='tooltip'>Borrar</a>";
+                        echo "</td>";
                     echo "</tr>";
                 }
                 echo "</tbody>";                            
