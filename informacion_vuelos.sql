@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-05-2024 a las 06:37:19
+-- Tiempo de generación: 29-05-2024 a las 06:02:02
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -195,10 +195,19 @@ INSERT INTO `genero` (`ID_Genero`, `Tipo_Genero`, `Genero`) VALUES
 --
 
 CREATE TABLE `informacion_vuelos` (
+  `ID_info_vuelos` int(11) NOT NULL,
   `ID_Vuelo_FK` int(11) NOT NULL,
   `Pasajero_FK` int(11) DEFAULT NULL,
   `Tripulacion_FK` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `informacion_vuelos`
+--
+
+INSERT INTO `informacion_vuelos` (`ID_info_vuelos`, `ID_Vuelo_FK`, `Pasajero_FK`, `Tripulacion_FK`) VALUES
+(1, 1, 1, 1),
+(2, 1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -329,8 +338,20 @@ CREATE TABLE `tripulacion` (
   `Segundo_Apellido` varchar(25) DEFAULT NULL,
   `genero` int(1) DEFAULT NULL,
   `Relacion_aerolinea` int(11) DEFAULT NULL,
-  `Cod_Pais_id_FK` int(3) DEFAULT NULL
+  `Cod_Pais_id_FK` int(3) DEFAULT NULL,
+  `Vuelo_FK` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `tripulacion`
+--
+
+INSERT INTO `tripulacion` (`ID_Empleado`, `Primer_Nombre`, `Segundo_Nombre`, `Primer_Apellido`, `Segundo_Apellido`, `genero`, `Relacion_aerolinea`, `Cod_Pais_id_FK`, `Vuelo_FK`) VALUES
+(1, 'William', 'Efrain', 'Abella', 'Herrera', 2, 1, 1, NULL),
+(2, 'Isabel', '', 'Realpe', 'Bravo', 1, 1, 2, NULL),
+(3, 'Horacio', '', 'Astudillo', '', 2, 1, 1, NULL),
+(4, 'Martha', 'Lucia', 'Cortez', 'Bonilla', 1, 2, 7, NULL),
+(5, 'Janeth', '', 'Lopez', 'Calderon', 1, 2, 7, NULL);
 
 -- --------------------------------------------------------
 
@@ -349,6 +370,14 @@ CREATE TABLE `vuelos` (
   `Hora_salida` datetime DEFAULT NULL,
   `Hora_llegada` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `vuelos`
+--
+
+INSERT INTO `vuelos` (`ID_vuelo`, `Numero_Vuelo`, `Tipo_vuelo_FK`, `Aerolinea_FK`, `Estado_vuelo_FK`, `Tipo_Trayecto_FK`, `Trayecto_FK`, `Hora_salida`, `Hora_llegada`) VALUES
+(1, 'AV01', 1, 1, 1, 1, 1, '2024-05-30 10:00:00', '2024-05-30 11:10:00'),
+(2, 'AV02', 1, 1, 6, 2, 4, '2024-06-03 16:30:00', '2024-06-03 17:40:00');
 
 --
 -- Índices para tablas volcadas
@@ -390,9 +419,10 @@ ALTER TABLE `genero`
 -- Indices de la tabla `informacion_vuelos`
 --
 ALTER TABLE `informacion_vuelos`
-  ADD PRIMARY KEY (`ID_Vuelo_FK`),
+  ADD PRIMARY KEY (`ID_info_vuelos`),
   ADD KEY `Pasajero_FK` (`Pasajero_FK`),
-  ADD KEY `Tripulacion_FK` (`Tripulacion_FK`);
+  ADD KEY `Tripulacion_FK` (`Tripulacion_FK`),
+  ADD KEY `ID_Vuelo_FK` (`ID_Vuelo_FK`);
 
 --
 -- Indices de la tabla `pais`
@@ -435,17 +465,20 @@ ALTER TABLE `tripulacion`
   ADD PRIMARY KEY (`ID_Empleado`),
   ADD KEY `Relacion_aerolinea` (`Relacion_aerolinea`),
   ADD KEY `Cod_Pais_id_FK` (`Cod_Pais_id_FK`),
-  ADD KEY `genero` (`genero`);
+  ADD KEY `genero` (`genero`),
+  ADD KEY `Vuelo_FK` (`Vuelo_FK`);
 
 --
 -- Indices de la tabla `vuelos`
 --
 ALTER TABLE `vuelos`
   ADD PRIMARY KEY (`ID_vuelo`),
+  ADD UNIQUE KEY `ID_vuelo` (`ID_vuelo`),
   ADD KEY `Tipo_vuelo_FK` (`Tipo_vuelo_FK`),
   ADD KEY `ID_aerolinea_FK` (`Aerolinea_FK`),
   ADD KEY `Estado_vuelo_FK` (`Estado_vuelo_FK`),
-  ADD KEY `Id_Trayecto` (`Trayecto_FK`);
+  ADD KEY `Id_Trayecto` (`Trayecto_FK`),
+  ADD KEY `Tipo_Trayecto_FK` (`Tipo_Trayecto_FK`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -503,13 +536,13 @@ ALTER TABLE `trayecto`
 -- AUTO_INCREMENT de la tabla `tripulacion`
 --
 ALTER TABLE `tripulacion`
-  MODIFY `ID_Empleado` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Empleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `vuelos`
 --
 ALTER TABLE `vuelos`
-  MODIFY `ID_vuelo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_vuelo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
@@ -557,7 +590,8 @@ ALTER TABLE `trayecto`
 ALTER TABLE `tripulacion`
   ADD CONSTRAINT `tripulacion_ibfk_1` FOREIGN KEY (`Relacion_aerolinea`) REFERENCES `aerolinea` (`ID_aerolinea`),
   ADD CONSTRAINT `tripulacion_ibfk_2` FOREIGN KEY (`Cod_Pais_id_FK`) REFERENCES `pais` (`ID_Pais`),
-  ADD CONSTRAINT `tripulacion_ibfk_3` FOREIGN KEY (`genero`) REFERENCES `genero` (`ID_Genero`);
+  ADD CONSTRAINT `tripulacion_ibfk_3` FOREIGN KEY (`genero`) REFERENCES `genero` (`ID_Genero`),
+  ADD CONSTRAINT `tripulacion_ibfk_4` FOREIGN KEY (`Vuelo_FK`) REFERENCES `informacion_vuelos` (`ID_info_vuelos`);
 
 --
 -- Filtros para la tabla `vuelos`
@@ -566,7 +600,8 @@ ALTER TABLE `vuelos`
   ADD CONSTRAINT `vuelos_ibfk_1` FOREIGN KEY (`Tipo_vuelo_FK`) REFERENCES `tipo_vuelo` (`ID_tipo_vuelo`),
   ADD CONSTRAINT `vuelos_ibfk_2` FOREIGN KEY (`Aerolinea_FK`) REFERENCES `aerolinea` (`ID_aerolinea`),
   ADD CONSTRAINT `vuelos_ibfk_3` FOREIGN KEY (`Estado_vuelo_FK`) REFERENCES `estado_vuelo` (`ID_Estado`),
-  ADD CONSTRAINT `vuelos_ibfk_4` FOREIGN KEY (`Trayecto_FK`) REFERENCES `trayecto` (`ID_Trayecto`);
+  ADD CONSTRAINT `vuelos_ibfk_4` FOREIGN KEY (`Trayecto_FK`) REFERENCES `trayecto` (`ID_Trayecto`),
+  ADD CONSTRAINT `vuelos_ibfk_5` FOREIGN KEY (`Tipo_Trayecto_FK`) REFERENCES `tipo_trayecto` (`ID_Tipo_Trayecto`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
