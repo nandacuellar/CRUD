@@ -110,7 +110,7 @@ JOIN
                         echo "<td>";
                             echo "<a href='vuelos/ver.php?id=". $row['ID_vuelo'] ."' title='Ver' data-toggle='tooltip'>Ver</a>";
                             echo "<a href='update.php?id=". $row['ID_vuelo'] ."' title='Actualizar' data-toggle='tooltip'>Editar</a>";
-                            echo "<a href='delete.php?id=". $row['ID_vuelo'] ."' title='Borrar' data-toggle='tooltip'>Borrar</a>";
+                            echo "<a href='vuelos/eliminar.php?id=". $row['ID_vuelo'] ."' title='Borrar' data-toggle='tooltip'>Borrar</a>";
                         echo "</td>";
                     echo "</tr>";
                 }
