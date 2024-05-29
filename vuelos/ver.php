@@ -108,7 +108,7 @@ WHERE
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h1>Ver Empleado</h1>
+                        <h1>Ver vuelo</h1>
                     </div>
                     <div class="form-group">
                         <label>Id de Vuelo</label>
