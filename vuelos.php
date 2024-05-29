@@ -108,9 +108,9 @@ JOIN
                         echo "<td>" . $row['Hora_salida'] . "</td>";
                         echo "<td>" . $row['Hora_llegada'] . "</td>";
                         echo "<td>";
-                            echo "<a href='vuelos/agregar.php?id=". $row['ID_vuelo'] ."' title='Ver' data-toggle='tooltip'>Ver</a>";
+                            echo "<a href='vuelos/ver.php?id=". $row['ID_vuelo'] ."' title='Ver' data-toggle='tooltip'>Ver</a>";
                             echo "<a href='update.php?id=". $row['ID_vuelo'] ."' title='Actualizar' data-toggle='tooltip'>Editar</a>";
-                            echo "<a href='delete.php?id=". $row['ID_vuelo'] ."' title='Borrar' data-toggle='tooltip'>Borrar</a>";
+                            echo "<a href='vuelos/eliminar.php?id=". $row['ID_vuelo'] ."' title='Borrar' data-toggle='tooltip'>Borrar</a>";
                         echo "</td>";
                     echo "</tr>";
                 }
@@ -119,7 +119,7 @@ JOIN
             // Free result set
             mysqli_free_result($result);
         } else{
-            echo "<p class='lead'><em>No records were found.</em></p>";
+            echo "<p class='lead'><em>No hay registros.</em></p>";
         }
     } else{
         echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
