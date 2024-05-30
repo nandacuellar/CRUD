@@ -225,7 +225,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-
+<?php include '../navbar.php'; ?>
     <div class="col-md-7 col-lg-5 mx-auto mt-5">
         <div class=" <?php echo (!isset($id)) ? 'd-block' : 'd-none'; ?>">
             <div class="alert alert-danger" role="alert">
