@@ -93,69 +93,69 @@ WHERE
 <head>
     <meta charset="UTF-8">
     <title>Ver Empleado</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-    <style type="text/css">
-        .wrapper {
-            width: 500px;
-            margin: 0 auto;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body>
-    <div class="wrapper">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="page-header">
-                        <h1>Ver vuelo</h1>
-                    </div>
-                    <div class="form-group">
-                        <label>Id de Vuelo</label>
-                        <p class="form-control-static"><?php echo $row["ID_vuelo"]; ?></p>
-                    </div>
-                    <div class="form-group">
-                        <label>Numero de Vuelo</label>
-                        <p class="form-control-static"><?php echo $row["Numero_Vuelo"]; ?></p>
-                    </div>
-                    <div class=" form-group">
-                        <label>Tipo de Vuelo</label>
-                        <p class="form-control-static"><?php echo $row["Tipo_vuelo_FK"]; ?></p>
-                    </div>
-                    <div class=" form-group">
-                        <label>Aerolinea</label>
-                        <p class="form-control-static"><?php echo $row["Aerolinea_FK"]; ?></p>
-                    </div>
-                    <div class=" form-group">
-                        <label>Estado de Vuelo</label>
-                        <p class="form-control-static"><?php echo $row["Estado_vuelo_FK"]; ?></p>
-                    </div>
-                    <div class=" form-group">
-                        <label>Tipo de Trayecto</label>
-                        <p class="form-control-static"><?php echo $row["Tipo_Trayecto_FK"]; ?></p>
-                    </div>
-                    <div class=" form-group">
-                        <label>Ciudad de Origen</label>
-                        <p class="form-control-static"><?php echo $row["Ciudad_Origen_Name"]; ?></p>
-                    </div>
-                    <div class=" form-group">
-                        <label>Ciudad de Destino</label>
-                        <p class="form-control-static"><?php echo $row["Ciudad_Destino_Name"]; ?></p>
-                    </div>
-                    <div class=" form-group">
-                        <label>Hora de Salida</label>
-                        <p class="form-control-static"><?php echo $row["Hora_salida"]; ?></p>
-                    </div>
-                    <div class=" form-group">
-                        <label>Hora de Llegada</label>
-                        <p class="form-control-static"><?php echo $row["Hora_llegada"]; ?></p>
-                    </div>
 
-                    <p><a href="../vuelos.php" class="btn btn-primary">Volver</a></p>
+    <?php include '../navbar.php'; ?>
+
+    <div class="col-md-7 col-lg-5 mx-auto mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-header">
+                    <h1>Ver vuelo</h1>
+                    <p>Detalles del vuelo: <?php echo $row["Numero_Vuelo"]; ?></p>
                 </div>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Id de Vuelo</th>
+                        <td><?php echo $row["ID_vuelo"]; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Numero de Vuelo</th>
+                        <td><?php echo $row["Numero_Vuelo"]; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Tipo de Vuelo</th>
+                        <td><?php echo $row["Tipo_vuelo_FK"]; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Aerolinea</th>
+                        <td><?php echo $row["Aerolinea_FK"]; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Estado de Vuelo</th>
+                        <td><?php echo $row["Estado_vuelo_FK"]; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Tipo de Trayecto</th>
+                        <td><?php echo $row["Tipo_Trayecto_FK"]; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Ciudad de Origen</th>
+                        <td><?php echo $row["Ciudad_Origen_Name"]; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Ciudad de Destino</th>
+                        <td><?php echo $row["Ciudad_Destino_Name"]; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Hora de Salida</th>
+                        <td><?php echo $row["Hora_salida"]; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Hora de Llegada</th>
+                        <td><?php echo $row["Hora_llegada"]; ?></td>
+                    </tr>
+                </table>
+
+                <p><a href="../vuelos.php" class="btn btn-primary">Volver</a></p>
             </div>
         </div>
     </div>
+
 </body>
 
 </html>

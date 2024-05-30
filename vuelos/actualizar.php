@@ -2,11 +2,105 @@
 // Include config file
 require_once "../config.php";
 
-// Define variables and initialize with empty value
-$fly_number = $hour_out = $hour_in = '';
+$id = null;
+$fly_id =
+    $fly_number =
+    $fly_type =
+    $fly_airline =
+    $fly_status =
+    $fly_route_type =
+    $fly_route =
+    $fly_in =
+    $fly_out =
+    '';
 $fly_number_err = $hour_out_err = $hour_in_err = '';
 $isSaved = null;
 
+if (isset($_POST["id"]) && !empty($_POST["id"])) {
+
+    $id = $_POST["id"];
+    $numero_vuelo = $_POST['numero_vuelo'];
+    $tipo_vuelo = $_POST['tipo_vuelo'];
+    $aerolinea = $_POST['aerolinea'];
+    $estado_vuelo = $_POST['estado_vuelo'];
+    $tipo_trayecto = $_POST['tipo_trayecto'];
+    $trayecto = $_POST['trayecto'];
+    $hora_salida = $_POST['hora_salida'];
+    $hora_llegada = $_POST['hora_llegada'];
+
+   // Numero_Vuelo,Tipo_vuelo_FK, Aerolinea_FK, Estado_vuelo_FK, Tipo_Trayecto_FK, Trayecto_FK, Hora_salida, Hora_llegada
+
+    $sql = "UPDATE vuelos SET 
+        Numero_Vuelo = ?, 
+        Tipo_vuelo_FK = ?, 
+        Aerolinea_FK = ?, 
+        Estado_vuelo_FK = ?, 
+        Tipo_Trayecto_FK = ?, 
+        Trayecto_FK = ?, 
+        Hora_salida = ?, 
+        Hora_llegada = ? 
+        WHERE ID_vuelo = ?";
+
+    $stmt = mysqli_prepare($link, $sql);
+    mysqli_stmt_bind_param($stmt, "siiiiissi", $numero_vuelo, $tipo_vuelo, $aerolinea, $estado_vuelo, $tipo_trayecto, $trayecto, $hora_salida, $hora_llegada, $id);
+
+    // Attempt to execute the prepared statement
+    if (mysqli_stmt_execute($stmt)) {
+        echo "Records updated successfully.";
+        header("location: ../vuelos.php");
+    } else {
+        echo "Something went wrong. Please try again later.";
+    }
+} else {
+    if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
+        // Get URL parameter
+        $id =  trim($_GET["id"]);
+
+        // Prepare a select statement
+        $sql = "SELECT * FROM vuelos WHERE ID_vuelo = ?";
+        if ($stmt = mysqli_prepare($link, $sql)) {
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "i", $param_id);
+
+            // Set parameters
+            $param_id = $id;
+
+            // Attempt to execute the prepared statement
+            if (mysqli_stmt_execute($stmt)) {
+                $result = mysqli_stmt_get_result($stmt);
+
+                if (mysqli_num_rows($result) == 1) {
+                    /* Fetch result row as an associative array. Since the result set
+                    contains only one row, we don't need to use while loop */
+                    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+                    // Retrieve individual field value
+                    $fly_id = $row['ID_vuelo'];
+                    $fly_number = $row['Numero_Vuelo'];
+                    $fly_type = $row['Tipo_vuelo_FK'];
+                    $fly_airline = $row['Aerolinea_FK'];
+                    $fly_status = $row['Estado_vuelo_FK'];
+                    $fly_route_type = $row['Tipo_Trayecto_FK'];
+                    $fly_route = $row['Trayecto_FK'];
+                    $fly_in = $row['Hora_salida'];
+                    $fly_out = $row['Hora_llegada'];
+                } else {
+                    echo "Oops! Something went wrong. Please try again later.";
+                }
+            } else {
+                echo "Oops! Something went wrong. Please try again later.";
+            }
+        }
+
+        // // Close statement
+        // mysqli_stmt_close($stmt);
+
+        // // Close connection
+        // mysqli_close($link);
+    } else {
+        echo "Oops! Something went wrong. Please try again later.";
+    }
+}
 
 
 $sql_tipo_vuelo = "SELECT ID_tipo_vuelo, tipo_vuelo FROM tipo_vuelo";
@@ -74,9 +168,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hora_salida = $_POST['hora_salida'];
         $hora_llegada = $_POST['hora_llegada'];
 
-        // Prepare an insert statement
-        $sql = "INSERT INTO vuelos (Numero_Vuelo,Tipo_vuelo_FK, Aerolinea_FK, Estado_vuelo_FK, Tipo_Trayecto_FK, Trayecto_FK, Hora_salida, Hora_llegada) VALUES (?,?, ?, ?, ?, ?, ?, ?)";
-
+        $sql = "UPDATE vuelos SET 
+        numero_vuelo = ?, 
+        tipo_vuelo = ?, 
+        aerolinea = ?, 
+        estado_vuelo = ?, 
+        tipo_trayecto = ?, 
+        trayecto = ?, 
+        hora_salida = ?, 
+        hora_llegada = ? 
+        WHERE ID_vuelo = ?";
         if ($stmt = mysqli_prepare($link, $sql)) {
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "siiiiiss", $numero_vuelo, $param_tipo_vuelo, $param_aerolinea, $param_estado_vuelo, $param_tipo_trayecto, $param_trayecto, $param_hora_salida, $param_hora_llegada);
@@ -108,6 +209,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Close connection
     mysqli_close($link);
 }
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -117,19 +221,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <title>Agregar Empleado</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <style type="text/css">
-        .wrapper {
-            width: 500px;
-            margin: 0 auto;
-        }
-    </style>
+
 </head>
 
 <body>
 
-<?php include '../navbar.php'; ?>
     <div class="col-md-7 col-lg-5 mx-auto mt-5">
-        <div class="row">
+        <div class=" <?php echo (!isset($id)) ? 'd-block' : 'd-none'; ?>">
+            <div class="alert alert-danger" role="alert">
+                <strong>Error: </strong>No esta diponible esta pagina sin un id valido!
+            </div>
+        </div>
+        <div class="row <?php echo (!isset($id) && !empty($id)) ? 'd-none' : 'd-block'; ?>">
 
 
             <div class="col-md-12">
@@ -137,16 +240,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <h2>Agregar Vuelo</h2>
                 </div>
                 <p>Favor diligenciar el siguiente formulario, para agregar el empleado.</p>
+                <hr>
                 <form class="row g-3 needs-validation" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+
+
+                    <input type="text" name="id" value="<?php echo $fly_id; ?>" hidden>
+
 
                     <div class="col-md-12">
 
-                        <div class="form-group <?php echo (!empty($fly_number_err)) ? 'has-error' : ''; ?>">
+                        <div class="form-group <?php echo (!isset($fly_number) && !empty($fly_number)) ? 'has-error' : ''; ?>">
                             <label>Numero de vuelo</label>
                             <input type="text" name="numero_vuelo" class="form-control" value="<?php echo $fly_number; ?>" required>
                             <span class="help-block"><?php echo $fly_number_err; ?></span>
-
-
                         </div>
 
                     </div>
@@ -157,7 +263,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php
                             if ($result_tipo_vuelo->num_rows > 0) {
                                 while ($row = $result_tipo_vuelo->fetch_assoc()) {
-                                    echo "<option value='" . $row['ID_tipo_vuelo'] . "'>" . $row['tipo_vuelo'] . "</option>";
+                                    $selected = ($row['ID_tipo_vuelo'] == $fly_type) ? "selected" : "";
+                                    echo "<option value='" . $row['ID_tipo_vuelo'] . "' $selected>" . $row['tipo_vuelo'] . "</option>";
                                 }
                             }
                             ?>
@@ -171,7 +278,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php
                             if ($result_aerolinea->num_rows > 0) {
                                 while ($row = $result_aerolinea->fetch_assoc()) {
-                                    echo "<option value='" . $row['ID_aerolinea'] . "'>" . $row['Nombre_aerolinea'] . "</option>";
+                                    $selected = ($row['ID_aerolinea'] == $fly_airline) ? "selected" : "";
+                                    echo "<option value='" . $row['ID_aerolinea'] . "'$selected>" . $row['Nombre_aerolinea'] . "</option>";
                                 }
                             }
                             ?>
@@ -186,7 +294,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php
                             if ($result_estado_vuelo->num_rows > 0) {
                                 while ($row = $result_estado_vuelo->fetch_assoc()) {
-                                    echo "<option value='" . $row['ID_estado'] . "'>" . $row['Estado_Vuelo'] . "</option>";
+                                    $selected = ($row['ID_estado'] == $fly_status) ? "selected" : "";
+                                    echo "<option value='" . $row['ID_estado'] . "'$selected>" . $row['Estado_Vuelo'] . "</option>";
                                 }
                             }
                             ?>
@@ -201,7 +310,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php
                             if ($result_tipo_trayecto->num_rows > 0) {
                                 while ($row = $result_tipo_trayecto->fetch_assoc()) {
-                                    echo "<option value='" . $row['ID_tipo_trayecto'] . "'>" . $row['Tipo_Trayecto'] . "</option>";
+                                    $selected = ($row['ID_tipo_trayecto'] == $fly_route_type) ? "selected" : "";
+                                    echo "<option value='" . $row['ID_tipo_trayecto'] . "'$selected>" . $row['Tipo_Trayecto'] . "</option>";
                                 }
                             }
                             ?>
@@ -219,7 +329,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $result_trayecto = mysqli_query($link, $sql_trayecto);
                             if ($result_trayecto->num_rows > 0) {
                                 while ($row = $result_trayecto->fetch_assoc()) {
-                                    echo "<option value='" . $row['ID_Trayecto'] . "'>" . $row['Nombre_ciudad_origen'] . " - " . $row['Nombre_ciudad_destino'] . "</option>";
+                                    $selected = ($row['ID_Trayecto'] == $fly_route) ? "selected" : "";
+                                    echo "<option value='" . $row['ID_Trayecto'] . "'$selected>" . $row['Nombre_ciudad_origen'] . " - " . $row['Nombre_ciudad_destino'] . "</option>";
                                 }
                             }
                             ?>
@@ -228,19 +339,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <div class="col-md-6">
                         <label for="hora_salida">Hora de Salida:</label>
-                        <input type="datetime-local" class="form-control" name="hora_salida" id="hora_salida" required>
+                        <input value="<?php echo $fly_in ?>" type="datetime-local" class="form-control" name="hora_salida" id="hora_salida" required>
                     </div>
-
                     <div class="col-md-6">
                         <label for="hora_llegada">Hora de Llegada:</label>
-                        <input type="datetime-local" class="form-control" name="hora_llegada" id="hora_llegada" required>
+                        <input value="<?php echo $fly_in ?>" type="datetime-local" class="form-control" name="hora_llegada" id="hora_llegada" required>
                     </div>
                     <input type="submit" class="btn btn-primary mt-3" value="Submit">
                     <a href="../vuelos.php" class="btn btn-default">Cancelar</a>
                 </form>
             </div>
         </div>
+
     </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

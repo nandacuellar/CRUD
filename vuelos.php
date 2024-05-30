@@ -4,33 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Lista de vuelos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script> -->
-    <style type="text/css">
-    .wrapper {
-        width: 650px;
-        margin: 0 auto;
-    }
-
-    .page-header h2 {
-        margin-top: 0;
-    }
-
-    table tr td:last-child a {
-        margin-right: 15px;
-    }
-    </style>
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-    </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body>
-
+<?php include 'navbar.php'; ?>
     <div class="container px-4 py-5" id="hanging-icons">
         <div class="row">
 
@@ -38,15 +17,15 @@
             <div class="col-md-12">
                 <div class="d-flex justify-content-between mb-3">
                     <a href="index.php" class="btn btn-secondary">Regresar</a>
-                    <h2 class="pull-left">Vuelos: Lista</h2>
+                    <h4>Vuelos: Lista</h4>
                     <a href="vuelos/agregar.php" class="btn btn-success">Agregar nuevo vuelo</a>
                 </div>
                 <?php
-    // Include config file
-    require_once "config.php";
-    
-    // Attempt select query execution
-    $sql = "SELECT 
+                // Include config file
+                require_once "config.php";
+
+                // Attempt select query execution
+                $sql = "SELECT 
     vuelos.ID_vuelo,
     vuelos.Numero_Vuelo,
     tipo_vuelo.tipo_vuelo as Tipo_vuelo_FK,
@@ -76,11 +55,11 @@ JOIN
 JOIN 
     ciudad AS ciudad_destino ON trayecto.Ciudad_Destino = ciudad_destino.ID_ciudad;
 ";
-    if($result = mysqli_query($link, $sql)){
-        if(mysqli_num_rows($result) > 0){
-            echo "<table class='table table-bordered table-striped'>";
-                echo "<thead>";
-                    echo "<tr>";
+                if ($result = mysqli_query($link, $sql)) {
+                    if (mysqli_num_rows($result) > 0) {
+                        echo "<table class='table table-bordered table-striped'>";
+                        echo "<thead>";
+                        echo "<tr>";
                         echo "<th>#</th>";
                         echo "<th>Numero de vuelo</th>";
                         echo "<th>Tipo de vuelo</th>";
@@ -92,42 +71,42 @@ JOIN
                         echo "<th>Hora de Salida</th>";
                         echo "<th>Hora de Llegada</th>";
                         echo "<th>Acciones</th>";
-                    echo "</tr>";
-                echo "</thead>";
-                echo "<tbody>";
-                while($row = mysqli_fetch_array($result)){
-                    echo "<tr>";
-                        echo "<td>" . $row['ID_vuelo'] . "</td>";
-                        echo "<td>" . $row['Numero_Vuelo'] . "</td>";
-                        echo "<td>" . $row['Tipo_vuelo_FK'] . "</td>";
-                        echo "<td>" . $row['Aerolinea_FK'] . "</td>";
-                        echo "<td>" . $row['Estado_vuelo_FK'] . "</td>";
-                        echo "<td>" . $row['Tipo_Trayecto_FK'] . "</td>";
-                        echo "<td>" . $row['Ciudad_Origen_Name'] . "</td>";
-                        echo "<td>" . $row['Ciudad_Destino_Name'] . "</td>";
-                        echo "<td>" . $row['Hora_salida'] . "</td>";
-                        echo "<td>" . $row['Hora_llegada'] . "</td>";
-                        echo "<td>";
-                            echo "<a href='vuelos/ver.php?id=". $row['ID_vuelo'] ."' title='Ver' data-toggle='tooltip'>Ver</a>";
-                            echo "<a href='update.php?id=". $row['ID_vuelo'] ."' title='Actualizar' data-toggle='tooltip'>Editar</a>";
-                            echo "<a href='vuelos/eliminar.php?id=". $row['ID_vuelo'] ."' title='Borrar' data-toggle='tooltip'>Borrar</a>";
-                        echo "</td>";
-                    echo "</tr>";
+                        echo "</tr>";
+                        echo "</thead>";
+                        echo "<tbody>";
+                        while ($row = mysqli_fetch_array($result)) {
+                            echo "<tr>";
+                            echo "<td>" . $row['ID_vuelo'] . "</td>";
+                            echo "<td>" . $row['Numero_Vuelo'] . "</td>";
+                            echo "<td>" . $row['Tipo_vuelo_FK'] . "</td>";
+                            echo "<td>" . $row['Aerolinea_FK'] . "</td>";
+                            echo "<td>" . $row['Estado_vuelo_FK'] . "</td>";
+                            echo "<td>" . $row['Tipo_Trayecto_FK'] . "</td>";
+                            echo "<td>" . $row['Ciudad_Origen_Name'] . "</td>";
+                            echo "<td>" . $row['Ciudad_Destino_Name'] . "</td>";
+                            echo "<td>" . $row['Hora_salida'] . "</td>";
+                            echo "<td>" . $row['Hora_llegada'] . "</td>";
+                            echo "<td>";
+                            echo "<a class='me-3' href='vuelos/ver.php?id=" . $row['ID_vuelo'] . "' title='Ver' data-toggle='tooltip'><i class='bi bi-eye'></i></a>";
+                            echo "<a class='me-3' href='vuelos/actualizar.php?id=" . $row['ID_vuelo'] . "' title='Actualizar' data-toggle='tooltip'><i class='bi bi-pencil'></i></a>";
+                            echo "<a class='me-3' href='vuelos/eliminar.php?id=" . $row['ID_vuelo'] . "' title='Borrar' data-toggle='tooltip'><i class='bi bi-trash'></i></a>";
+                            echo "</td>";
+                            echo "</tr>";
+                        }
+                        echo "</tbody>";
+                        echo "</table>";
+                        // Free result set
+                        mysqli_free_result($result);
+                    } else {
+                        echo "<p class='lead'><em>No hay registros.</em></p>";
+                    }
+                } else {
+                    echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
                 }
-                echo "</tbody>";                            
-            echo "</table>";
-            // Free result set
-            mysqli_free_result($result);
-        } else{
-            echo "<p class='lead'><em>No hay registros.</em></p>";
-        }
-    } else{
-        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-    }
 
-    // Close connection
-    mysqli_close($link);
-    ?>
+                // Close connection
+                mysqli_close($link);
+                ?>
             </div>
         </div>
     </div>
@@ -135,8 +114,7 @@ JOIN
 
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
 </body>
 
