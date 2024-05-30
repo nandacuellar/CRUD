@@ -115,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <head>
     <meta charset="UTF-8">
-    <title>Agregar Empleado</title>
+    <title>Agregar Vuelo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style type="text/css">
         .wrapper {
@@ -136,7 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="page-header">
                     <h2>Agregar Vuelo</h2>
                 </div>
-                <p>Favor diligenciar el siguiente formulario, para agregar el empleado.</p>
+                <p>Favor diligenciar el siguiente formulario, para agregar el vuelo.</p>
                 <form class="row g-3 needs-validation" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 
                     <div class="col-md-12">
